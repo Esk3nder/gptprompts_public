@@ -1,0 +1,131 @@
+# Development Rules and Best Practices
+
+## Server Management
+
+### Deployment Process
+
+* **MUST** use an automated deployment pipeline (CI/CD) for consistent and repeatable releases.
+* **MUST NOT** commit or deploy directly to the production server without code review and testing.
+* **SHOULD** maintain separate environments (development, staging, production) to isolate testing from live data.
+* **SHOULD NOT** perform manual configuration changes on servers; use configuration-management tools or scripts instead.
+
+### Security and Access
+
+* **MUST** enforce secure authentication (SSH keys, VPN, etc.) for server access.
+* **MUST NOT** share server credentials publicly or through insecure channels.
+* **SHOULD** apply security updates and patches regularly to all server software.
+* **SHOULD NOT** give unnecessary access to production servers; follow the principle of least privilege.
+
+### Monitoring and Backups
+
+* **MUST** implement logging and monitoring on all servers for error tracking and performance metrics.
+* **MUST** schedule regular backups for critical data and verify backup integrity.
+* **SHOULD** set up alerts for server downtime or abnormal metrics to enable quick response.
+* **SHOULD NOT** ignore backup failures or missing backups; address issues immediately to prevent data loss.
+
+---
+
+## Code Quality
+
+### Coding Standards
+
+* **MUST** follow the project’s coding style guide (indentation, naming conventions, file organization) consistently across all code.
+* **MUST NOT** introduce code that fails linting or formatting checks; all code **SHOULD** pass automated style linters before review.
+* **SHOULD** write self-documenting code with clear variable and function names, reducing the need for excessive comments.
+* **SHOULD NOT** duplicate code; refactor or use shared modules/functions to promote reuse and maintainability.
+
+### Documentation
+
+* **MUST** document public APIs, complex algorithms, and architectural decisions in code comments or project documentation.
+* **MUST** update relevant documentation whenever significant code changes or new features are introduced.
+* **SHOULD** maintain a **README** or developer guide explaining setup, usage, and coding conventions for new team members.
+* **SHOULD NOT** rely on tribal knowledge; ensure knowledge is captured in written form (documents, wikis, or comments).
+
+### Code Reviews
+
+* **MUST** undergo peer review for all non-trivial code changes via merge requests or pull requests.
+* **MUST** address code-review comments by either making changes or discussing why changes aren’t needed.
+* **SHOULD** use meaningful commit messages and pull-request descriptions to explain **what** and **why** of changes.
+* **SHOULD NOT** approve your own code changes; another team member **SHOULD** validate them for objectivity.
+
+---
+
+## Testing
+
+### Test Coverage
+
+* **MUST** write unit tests for new code, covering expected behaviors and edge cases.
+* **MUST** ensure critical bugs have corresponding regression tests to prevent re-occurrence.
+* **SHOULD** strive for high test coverage (e.g., a target percentage agreed by the team) without sacrificing test quality.
+* **SHOULD NOT** merge code that causes test failures; all tests **MUST** pass before integration.
+
+### Test Practices
+
+* **MUST** run tests locally or in CI before submitting code for review, catching issues early.
+* **MUST** use test data or mocks that do not depend on real production data or external services.
+* **SHOULD** perform integration tests and end-to-end tests in a staging environment that mirrors production.
+* **SHOULD NOT** ignore flaky tests; investigate and fix intermittent failures to maintain CI reliability.
+
+### Continuous Integration
+
+* **MUST** utilize Continuous Integration to automatically run tests and static analysis on every push or pull request.
+* **MUST** fix build or test pipeline failures as the highest priority before continuing new development.
+* **SHOULD** include linting and security scans in the CI process to catch issues beyond just functionality.
+* **SHOULD NOT** disable or bypass CI checks for expediency; maintain the integrity of the pipeline.
+
+---
+
+## Environment Safety
+
+### Configuration Management
+
+* **MUST** externalize configuration (e.g., using environment variables or config files) rather than hard-coding values, especially for secrets and credentials.
+* **MUST NOT** commit sensitive information (passwords, API keys, certificates) to the repository in plain text; use secret-management systems or encrypted files.
+* **SHOULD** maintain separate configuration for development, testing, and production (e.g., separate `.env` files) to prevent cross-environment impact.
+* **SHOULD NOT** reuse production credentials or data in development/testing environments; use dummy or anonymized data instead.
+
+### Environment Consistency
+
+* **MUST** use consistent development environments (such as containerization or virtual environments) to avoid “works on my machine” problems.
+* **MUST** document environment-setup steps (installations, environment variables, prerequisites) so any new developer can replicate the setup.
+* **SHOULD** use the same versions of languages, frameworks, and libraries across environments (development, CI, production) for consistency.
+* **SHOULD NOT** make local-environment changes (like upgrading a library) without updating requirements or documentation, to keep environments in sync.
+
+### Safe Deployments
+
+* **MUST** enable maintenance or **safe mode** during critical deployments to avoid user impact if migrations or updates fail.
+* **MUST** have a rollback plan (backups or versioned releases) for each deployment in case issues arise post-deployment.
+* **SHOULD** conduct deployments in staging environments first for validation, then promote to production upon success.
+* **SHOULD NOT** deploy to production on Fridays or before holidays unless necessary, to ensure team availability for fixes.
+
+---
+
+## Development Practices
+
+### Version Control and Branching
+
+* **MUST** use a feature-branch workflow: branch off `main` for new features/bugfixes and open a merge request when done.
+* **MUST NOT** commit directly to the `main`/`master` branch; all changes **SHOULD** go through a pull request and CI pipeline.
+* **SHOULD** keep branches focused on a single feature or fix; avoid “mega-branches” with unrelated changes.
+* **SHOULD** delete feature branches after merging to keep the repository tidy (the history is preserved in `main`).
+
+### Commit Discipline
+
+* **MUST** write clear, descriptive commit messages (in imperative tone), e.g., “Add input validation for login form.”
+* **MUST** break down large changes into smaller commits to simplify reviews and troubleshooting.
+* **SHOULD** follow a team-agreed commit-message convention (e.g., including issue keys or using semantic prefixes like **feat:**/**fix:**).
+* **SHOULD NOT** combine unrelated changes in one commit; separate them to ensure atomic commits.
+
+### Issue Tracking and Planning
+
+* **MUST** use the project’s issue-tracking system to document new features, bugs, and tasks.
+* **MUST** update the status of tickets (in progress, in review, done) as work progresses to keep the team informed.
+* **SHOULD** discuss significant changes or new features with the team (via design docs or meetings) before implementation to gather feedback.
+* **SHOULD NOT** start work on major changes without acceptance criteria or a clear definition of done.
+
+### Continuous Improvement
+
+* **MUST** proactively identify and suggest improvements in code structure, tools, or processes during retrospectives or team meetings.
+* **SHOULD** stay updated with relevant technology or library updates that could benefit the project, and propose upgrades when safe.
+* **SHOULD** engage in knowledge sharing (pair programming, code walkthroughs, writing wiki articles) to elevate team skills and consistency.
+* **SHOULD NOT** resist adopting new best practices or tools that the team has agreed to embrace; be open to change when it adds value.
