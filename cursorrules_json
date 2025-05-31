@@ -1,0 +1,236 @@
+{
+    "development_rules": {
+        "context_initialization": {
+            "description": "Starting point for each development task",
+            "steps": [
+                "ALWAYS check project documentation and coding standards",
+                "ALWAYS verify environment setup and dependencies",
+                "ALWAYS review related tickets and acceptance criteria"
+            ]
+        },
+        "operational_protocol": {
+            "description": "How to approach development tasks",
+            "before_action": [
+                "Create feature branch from main",
+                "Read relevant code sections before editing",
+                "Plan test coverage for changes"
+            ],
+            "during_development": [
+                "Follow project coding style guide consistently",
+                "Write self-documenting code with clear naming",
+                "Run tests locally before committing"
+            ],
+            "after_completion": [
+                "Submit pull request with meaningful description",
+                "Address code review comments",
+                "Update documentation for significant changes"
+            ]
+        },
+        "safety_requirements": {
+            "critical": [
+                "NEVER commit sensitive information to repository",
+                "NEVER deploy directly to production without review",
+                "NEVER bypass CI/CD pipeline checks",
+                "NEVER commit to main branch directly"
+            ],
+            "security": [
+                "ALWAYS use secure authentication for server access",
+                "ALWAYS externalize configuration and secrets",
+                "ALWAYS apply security updates regularly",
+                "ALWAYS follow principle of least privilege"
+            ],
+            "data_protection": [
+                "ALWAYS schedule and verify regular backups",
+                "ALWAYS use dummy data in development/testing",
+                "ALWAYS address backup failures immediately"
+            ]
+        },
+        "code_quality_standards": {
+            "mandatory": {
+                "style": [
+                    "Follow project coding style guide",
+                    "Pass automated linting and formatting checks",
+                    "Use consistent indentation and naming conventions"
+                ],
+                "documentation": [
+                    "Document public APIs and complex algorithms",
+                    "Update documentation with code changes",
+                    "Write meaningful commit messages"
+                ],
+                "reviews": [
+                    "Undergo peer review for all non-trivial changes",
+                    "Address code review comments",
+                    "Use another team member for validation"
+                ]
+            },
+            "recommended": {
+                "code_structure": [
+                    "Write self-documenting code",
+                    "Avoid code duplication - use shared modules",
+                    "Maintain README or developer guide"
+                ],
+                "process": [
+                    "Use meaningful pull request descriptions",
+                    "Explain what and why in changes"
+                ]
+            }
+        },
+        "testing_requirements": {
+            "mandatory": {
+                "coverage": [
+                    "Write unit tests for new code",
+                    "Create regression tests for critical bugs",
+                    "Ensure all tests pass before merge"
+                ],
+                "practices": [
+                    "Run tests locally before code review",
+                    "Use test data that doesn't depend on production",
+                    "Fix CI/CD pipeline failures as highest priority"
+                ],
+                "continuous_integration": [
+                    "Use CI to run tests on every push/PR",
+                    "Include linting and security scans in CI"
+                ]
+            },
+            "recommended": {
+                "quality": [
+                    "Strive for high test coverage target",
+                    "Perform integration tests in staging",
+                    "Investigate and fix flaky tests"
+                ]
+            }
+        },
+        "environment_management": {
+            "configuration": {
+                "mandatory": [
+                    "Externalize all configuration via environment variables",
+                    "Use secret management systems for credentials",
+                    "Maintain separate configs for each environment",
+                    "Document environment setup steps"
+                ],
+                "prohibited": [
+                    "Hard-coding configuration values",
+                    "Committing secrets in plain text",
+                    "Reusing production credentials in dev/test"
+                ]
+            },
+            "consistency": {
+                "mandatory": [
+                    "Use consistent development environments",
+                    "Document all setup prerequisites",
+                    "Use same versions across all environments"
+                ],
+                "recommended": [
+                    "Use containerization or virtual environments",
+                    "Update requirements when making local changes"
+                ]
+            },
+            "deployment_safety": {
+                "mandatory": [
+                    "Enable maintenance mode during critical deployments",
+                    "Have rollback plan for each deployment"
+                ],
+                "recommended": [
+                    "Deploy to staging first for validation",
+                    "Avoid Friday/holiday deployments unless necessary"
+                ]
+            }
+        },
+        "development_workflow": {
+            "version_control": {
+                "mandatory": [
+                    "Use feature-branch workflow from main",
+                    "All changes go through pull requests",
+                    "Write clear, descriptive commit messages",
+                    "Break large changes into smaller commits"
+                ],
+                "recommended": [
+                    "Keep branches focused on single feature/fix",
+                    "Delete feature branches after merging",
+                    "Follow team commit message conventions",
+                    "Ensure atomic commits with related changes only"
+                ]
+            },
+            "project_management": {
+                "mandatory": [
+                    "Use issue tracking for features, bugs, and tasks",
+                    "Update ticket status as work progresses"
+                ],
+                "recommended": [
+                    "Discuss significant changes before implementation",
+                    "Define clear acceptance criteria before starting"
+                ]
+            },
+            "continuous_improvement": {
+                "mandatory": [
+                    "Proactively identify and suggest improvements"
+                ],
+                "recommended": [
+                    "Stay updated with relevant technology updates",
+                    "Engage in knowledge sharing activities",
+                    "Be open to adopting agreed-upon best practices"
+                ]
+            }
+        },
+        "server_management": {
+            "deployment": {
+                "mandatory": [
+                    "Use automated CI/CD pipeline",
+                    "Maintain separate environments (dev/staging/prod)",
+                    "Implement logging and monitoring on all servers"
+                ],
+                "prohibited": [
+                    "Manual deployment to production",
+                    "Manual configuration changes on servers"
+                ]
+            },
+            "monitoring": {
+                "mandatory": [
+                    "Set up alerts for downtime and abnormal metrics",
+                    "Verify backup integrity regularly"
+                ],
+                "recommended": [
+                    "Enable quick response to alerts"
+                ]
+            }
+        },
+        "priorities": [
+            {
+                "source": "safety_requirements.critical",
+                "weight": 1.0
+            },
+            {
+                "source": "code_quality_standards.mandatory",
+                "weight": 0.9
+            },
+            {
+                "source": "testing_requirements.mandatory",
+                "weight": 0.9
+            },
+            {
+                "source": "environment_management",
+                "weight": 0.8
+            }
+        ],
+        "modes": {
+            "development": {
+                "description": "For feature development and bug fixes",
+                "focus": ["code_quality_standards", "testing_requirements", "development_workflow"]
+            },
+            "deployment": {
+                "description": "For production deployments",
+                "focus": ["safety_requirements", "environment_management.deployment_safety", "server_management"]
+            },
+            "maintenance": {
+                "description": "For ongoing maintenance and improvements",
+                "focus": ["continuous_improvement", "server_management.monitoring", "security"]
+            }
+        },
+        "team_directives": {
+            "culture": "quality_first",
+            "automation_preferred": true,
+            "security_conscious": true,
+            "documentation_required": true
+        }
+    }
+}
